@@ -1,0 +1,98 @@
+<!doctype html> 
+<html lang="en" xmlns:th="https://www.thymeleaf.com"> 
+<head>    
+    <meta charset="utf-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+    <title>Quan ly giang vien</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> 
+    <script src="https://kit.fontawesome.com/0faddc1af8.js" crossorigin="anonymous"></script> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+    	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style>
+    	.value {
+    	text-align: center
+    	}
+    </style>
+</head> 
+<body>    
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark"> 
+  		<div class="container-fluid"> 
+    		<a class="navbar-brand text-white" href="#">Quản lý giảng viên</a> 
+    		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" 
+    		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> 
+      			<span class="navbar-toggler-icon"></span> 
+    		</button> 
+    		<div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+      			<<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link active text-white"aria-current="page" href="/">Trang chủ</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link text-white" href="available_giangvien">Danh sách giảng viên</a>
+					</li>
+				</ul>
+				<div>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item">
+							<a class="nav-link text-white" href="giangvien_register">Thêm giảng viên mới</a>
+						</li>
+					</ul>
+				</div>
+    		</div> 
+  		</div> 
+	</nav>
+  	<div class="container my-5 col-md-9"> 
+    	<table border="1" class="table table-striped table-hover"> 
+  			<thead class="thead-dark"> 
+    			<tr class="value"> 
+      				<th scope="col">Mã giảng viên</th> 
+      				<th scope="col">Họ và tên</th> 
+      				<th scope="col">Tên bộ môn</th> 
+      				<th scope="col">Hệ số lương</th> 
+      				<th scope="col">Tình trạng</th>
+      				<th scope="col">Chức năng</th>
+    			</tr> 
+  			</thead> 
+  			<tbody> 
+    			<tr class="value" th:each="b :${giangvien}"> 
+      				<td th:text="${b.magv}"></td> 
+      				<td th:text="${b.hoten}"></td> 
+      				<td th:text="${b.tenbomon}"></td> 
+      				<td th:text="${b.hesoluong}"></td>  
+      				<!--  <td th:text="${b.tinhtrang}"></td>
+      				<td>
+      					if(${b.hesoluong} >= 5)
+      					{
+      					}
+      					else if(${b.hesoluong} >= 3 && ${b.hesoluong} < 5)
+      					{
+      					}
+      					else
+      					{
+      					}
+      				</td>-->
+      				<td th:text="${b.hesoluong >= 5 ? 'Cao' : (b.hesoluong < 5&& b.hesoluong >= 3 ? 'Trung bình' : 'Thấp')}"></td>
+      				<td>
+      					<a style="color:blue" th:href="@{/editGiangVien/{id}(id=${b.id})}">
+      						<i class="fa-solid fa-pen-to-square ms-4"></i>
+      					</a> 
+      					<a style="color:red" th:href="@{/deleteGiangVien/{id}(id=${b.id})}">
+      						<i class="fa-solid fa-trash ms-4"></i>
+      					</a> 
+      				</td>  
+       			</tr> 
+    		</tbody> 
+		</table> 
+  	</div> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" 
+    integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" 
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script> 
+</body> 
+</html>
